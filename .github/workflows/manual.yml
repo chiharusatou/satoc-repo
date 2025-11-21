@@ -6,9 +6,9 @@ on:
       greeting: # 入力パラメータ名
         type: choice
         options:
-          -info
-          -warn
-          -error
+          - info
+          - warn
+          - error
 
 jobs:
   run:
