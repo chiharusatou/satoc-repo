@@ -1,0 +1,15 @@
+name: Literals # ワークフロー名
+
+on: [push] # イベント(プッシュ時に起動)
+
+jobs:
+  print:
+    runs-on: ubuntu-latest
+    steps:
+      - run: printenv | grep'LITERAL_'
+      - env:
+        LITERAL_NULL: ${{null}}
+        LITERAL_BOOLEAN: ${{true}}
+        LITERAL_NUMBER: ${{1234}}
+        LITERAL_STRING: ${{'Hello'}}
+        LITERAL_OMIT_STRING: WORD 
