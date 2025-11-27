@@ -1,0 +1,11 @@
+name: Run name # ワークフロー名
+run-name: Run by @${{ github.actor }} # 実行名の動的な指定
+
+on: [push] # イベント：コードがプッシュされたときに起動
+
+jobs:
+  print: # ジョブID
+    runs-on: ubuntu-latest # ランナー：最新のUbuntu Linux環境で実行
+
+    steps:
+      - run: echo "Hello" # ステップ：単に "Hello" と出力
