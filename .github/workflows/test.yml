@@ -1,0 +1,21 @@
+name: Test # ワークフロー名
+on: 
+  pull_request: # イベント：プルリクエストイベントで起動
+    # フィルタ：'go/' フォルダ内の Go言語ファイル (*.go) が変更された場合のみ実行
+    paths: 
+      - 'go/**/*.go' 
+
+jobs:
+  test: # ジョブID
+    runs-on: ubuntu-latest # ランナー：最新のUbuntu環境で実行
+    steps:
+      # ステップ 1: actions/checkout@v4 - リポジトリのコードを作業環境に展開
+      - uses: actions/checkout@v4 
+      
+      # ステップ 2: actions/setup-go@v5 - Go言語の環境をセットアップ
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22' # Goのバージョンを 1.22 に指定
+          
+      # ステップ 3: テストの実行 (go test)
+      - run: go test go/excellent/*.go # go/excellent/ フォルダ内のGoテストを実行
