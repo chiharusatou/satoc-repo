@@ -1,0 +1,29 @@
+name: Static analysis # ワークフロー名: 静的解析
+on:
+  pull_request: # トリガー: プルリクエスト（PR）イベント
+    # フィルタリング: .github/workflows内のYAMLファイル変更時のみ実行
+    paths:
+      - '.github/workflows/*.yml'
+      - '.github/workflows/*.yaml'
+
+defaults: # すべてのジョブのデフォルト設定
+  run:
+    shell: bash # デフォルトのシェルとして bash を指定
+
+concurrency: # 実行の並行制御設定
+  group: ${{ github.workflow }}-${{ github.ref }} # グループ名: ワークフロー名とブランチ名で一意化
+  cancel-in-progress: true # 実行中の同じグループのワークフローをキャンセル
+
+jobs:
+  lint: # ジョブID
+    runs-on: ubuntu-latest
+    timeout-minutes: 5 # タイムアウト設定: 5分で強制終了
+
+    steps:
+      - uses: actions/checkout@v4 # ステップ 1: コードのチェックアウト
+
+      - run: | # ステップ 2: 静的解析の実行
+          docker run --rm \
+            -v "$(pwd):$(pwd)" \
+            -w "$(pwd)" \
+            rhysd/actionlint:latest
